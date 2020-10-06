@@ -42,16 +42,28 @@ const CreateRecord = () => {
   const handleSubmit = () => {
     const payload = { name, age, gameId: selectedGame };
 
-    axios.post(`${BASE_URL}/records`, payload).then(() => {
-      Alert.alert('Dados salvos com sucesso!');
-    });
+    axios
+      .post(`${BASE_URL}/records`, payload)
+      .then(() => {
+        Alert.alert('Dados salvos com sucesso!');
+        setName('');
+        setAge('');
+        setSelectedGame('');
+        setPlatform(undefined);
+      })
+      .catch(() => Alert.alert('Erro ao salvar informações!'));
   };
 
   useEffect(() => {
-    axios.get(`${BASE_URL}/games`).then((response) => {
-      const selectValues = mapSelectValues(response.data);
-      setAllGames(selectValues);
-    });
+    axios
+      .get(`${BASE_URL}/games`)
+      .then((response) => {
+        const selectValues = mapSelectValues(response.data);
+        console.log(selectValues);
+
+        setAllGames(selectValues);
+      })
+      .catch(() => Alert.alert('Erro ao listar os jogos!'));
   }, []);
 
   return (
@@ -63,6 +75,7 @@ const CreateRecord = () => {
           placeholder="Nome"
           placeholderTextColor="#9E9E9E"
           onChangeText={(text) => setName(text)}
+          value={name}
         />
         <TextInput
           keyboardType="numeric"
@@ -71,6 +84,7 @@ const CreateRecord = () => {
           placeholderTextColor="#9E9E9E"
           maxLength={3}
           onChangeText={(text) => setAge(text)}
+          value={age}
         />
         <View style={styles.platformContainer}>
           <PlatformCard
@@ -98,6 +112,7 @@ const CreateRecord = () => {
           }}
           placeholder={placeholder}
           value={selectedGame}
+          useNativeAndroidPickerStyle={false}
           items={filteredGames}
           style={pickerSelectStyles}
           Icon={() => {
