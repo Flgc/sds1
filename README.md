@@ -14,4 +14,4 @@ https://sds1-flgc.netlify.app/
 
 ### Modelo conceitual:
 
-![myImage](https://github.com/Flgc/sds1/blob/main/diagrama.png)
+![myImage](https://github.com/Flgc/sds1/blob/main/Diagrama.png)
